@@ -1,0 +1,7 @@
+The Gradle Wrapper JAR is from the Gradle 8.11.1 binary distribution.
+The gradlew and gradlew.bat launch scripts are from Gradle's v8.11.1 source tag.
+The Gradle Wrapper is licensed under the Apache License, Version 2.0.
+See LICENSE-APACHE-2.0.txt and the copyright notices in the launch scripts.
+
+Source: https://github.com/gradle/gradle/tree/v8.11.1
+Checksums: https://gradle.org/release-checksums/
