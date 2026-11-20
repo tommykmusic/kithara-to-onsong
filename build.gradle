@@ -1,0 +1,53 @@
+plugins {
+    id 'com.android.application' version '8.9.2'
+}
+
+layout.buildDirectory.set(layout.projectDirectory.dir('build/gradle'))
+
+def appId = 'com.tapediatispolis.kitharaimport'
+def generatedInputs = layout.buildDirectory.dir('generated/kitharaMain')
+def prepareAndroidInputs = tasks.register('prepareAndroidInputs', Sync) {
+    from('AndroidManifest.xml') {
+        // The standalone AAPT build uses package; Gradle sets it from applicationId.
+        filter { line -> line.replace(" package=\"${appId}\"", '') }
+    }
+    from(['extract-chart.js', 'LICENSE', 'THIRD_PARTY_NOTICES.txt']) {
+        into('assets')
+    }
+    into(generatedInputs)
+}
+
+android {
+    namespace = appId
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = appId
+        minSdk = 26
+        targetSdk = 35
+        versionCode = 1
+        versionName = '1.0'
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile generatedInputs.get().file('AndroidManifest.xml').asFile
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = [generatedInputs.get().dir('assets').asFile]
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+tasks.named('preBuild') {
+    dependsOn(prepareAndroidInputs)
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

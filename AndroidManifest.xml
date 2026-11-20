@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.tapediatispolis.kitharaimport" android:versionCode="1" android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="26" android:targetSdkVersion="35" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <queries><package android:name="com.onsongapp.app" /></queries>
+    <application android:label="Kithara to OnSong" android:icon="@drawable/ic_kithara" android:theme="@android:style/Theme.Material.Light.NoActionBar" android:allowBackup="false" android:usesCleartextTraffic="false">
+        <activity android:name=".ImportActivity" android:exported="true" android:launchMode="singleTop" android:windowSoftInputMode="adjustResize" android:enableOnBackInvokedCallback="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        <provider android:name=".ChartProvider" android:authorities="com.tapediatispolis.kitharaimport.charts" android:exported="false" android:grantUriPermissions="true" />
+    </application>
+</manifest>
